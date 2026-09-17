@@ -7,41 +7,145 @@
 
 <style>
 * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Arial, sans-serif;
     background: #f5f7fb;
     color: #172033;
 }
 
-button, input {
-    font-family: inherit;
+/* ================= LOGIN / REGISTER ================= */
+
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+        radial-gradient(circle at 15% 20%, #ddd9ff 0, transparent 28%),
+        radial-gradient(circle at 85% 80%, #e5dcff 0, transparent 30%),
+        #f5f7fb;
+    padding: 20px;
 }
 
-button {
-    cursor: pointer;
+.auth-box {
+    width: 440px;
+    max-width: 100%;
+    background: white;
+    border: 1px solid #e4e7ef;
+    border-radius: 22px;
+    padding: 35px;
+    box-shadow: 0 20px 60px rgba(30,35,60,.08);
 }
+
+.auth-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 21px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.auth-logo-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: linear-gradient(135deg,#6366f1,#8b5cf6);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-box h1 {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.auth-box .subtitle {
+    color: #747c8d;
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 25px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 7px;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    border: 1px solid #dfe3eb;
+    border-radius: 10px;
+    padding: 12px;
+    outline: none;
+    font-size: 13px;
+    background: white;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #635bff;
+}
+
+.name-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.auth-btn {
+    width: 100%;
+    border: none;
+    padding: 13px;
+    border-radius: 10px;
+    background: linear-gradient(135deg,#635bff,#7c3aed);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 7px;
+}
+
+.auth-btn:hover {
+    opacity: .9;
+}
+
+.error {
+    display: none;
+    color: #dc2626;
+    font-size: 12px;
+    margin-bottom: 12px;
+}
+
+/* ================= APP ================= */
 
 .app {
-    display: flex;
+    display: none;
     min-height: 100vh;
 }
-
-/* SIDEBAR */
 
 .sidebar {
     width: 250px;
     background: #111827;
     color: white;
-    padding: 25px 18px;
     position: fixed;
     top: 0;
     bottom: 0;
     left: 0;
+    padding: 25px 18px;
 }
 
 .logo {
@@ -56,8 +160,8 @@ button {
 .logo-icon {
     width: 38px;
     height: 38px;
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
     border-radius: 11px;
+    background: linear-gradient(135deg,#6366f1,#8b5cf6);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -77,6 +181,7 @@ button {
     padding: 13px;
     border-radius: 10px;
     font-size: 14px;
+    cursor: pointer;
 }
 
 .nav button:hover,
@@ -85,16 +190,22 @@ button {
     color: white;
 }
 
-.sidebar-footer {
+.logout {
     position: absolute;
     bottom: 25px;
-    left: 25px;
-    color: #7f899b;
-    font-size: 11px;
-    line-height: 1.5;
+    left: 18px;
+    right: 18px;
 }
 
-/* MAIN */
+.logout button {
+    width: 100%;
+    border: none;
+    background: #242c3c;
+    color: #b9c0ce;
+    padding: 11px;
+    border-radius: 9px;
+    cursor: pointer;
+}
 
 .main {
     margin-left: 250px;
@@ -129,7 +240,7 @@ button {
     width: 43px;
     height: 43px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    background: linear-gradient(135deg,#6366f1,#8b5cf6);
     color: white;
     display: flex;
     align-items: center;
@@ -137,7 +248,7 @@ button {
     font-weight: bold;
 }
 
-/* PAGES */
+/* ================= PAGES ================= */
 
 .page {
     display: none;
@@ -147,16 +258,13 @@ button {
     display: block;
 }
 
-/* HERO */
+/* ================= HERO ================= */
 
 .hero {
-    background: linear-gradient(120deg, #4f46e5, #7c3aed);
+    background: linear-gradient(120deg,#4f46e5,#7c3aed);
     color: white;
     border-radius: 20px;
     padding: 32px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     margin-bottom: 22px;
 }
 
@@ -166,43 +274,12 @@ button {
 }
 
 .hero p {
-    max-width: 650px;
     font-size: 14px;
     line-height: 1.6;
     opacity: .9;
 }
 
-/* BUTTONS */
-
-.btn {
-    padding: 11px 17px;
-    border-radius: 9px;
-    border: none;
-    font-weight: bold;
-    font-size: 13px;
-}
-
-.primary {
-    background: #635bff;
-    color: white;
-}
-
-.white {
-    background: white;
-    color: #4f46e5;
-}
-
-.outline {
-    background: white;
-    color: #172033;
-    border: 1px solid #e1e5ec;
-}
-
-.btn:hover {
-    transform: translateY(-1px);
-}
-
-/* CARDS */
+/* ================= CARDS ================= */
 
 .card {
     background: white;
@@ -211,16 +288,9 @@ button {
     padding: 20px;
 }
 
-.card h3 {
-    font-size: 16px;
-    margin-bottom: 17px;
-}
-
-/* STATS */
-
 .stats {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4,1fr);
     gap: 15px;
     margin-bottom: 20px;
 }
@@ -242,15 +312,13 @@ button {
     margin-top: 6px;
 }
 
-/* GRID */
-
 .grid {
     display: grid;
     grid-template-columns: 1.1fr .9fr;
     gap: 18px;
 }
 
-/* ACHIEVEMENTS */
+/* ================= ACHIEVEMENTS ================= */
 
 .achievement {
     display: flex;
@@ -272,7 +340,6 @@ button {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 19px;
 }
 
 .achievement b {
@@ -281,12 +348,12 @@ button {
 
 .achievement span {
     display: block;
-    color: #7b8392;
+    color: #777f8e;
     font-size: 11px;
     margin-top: 4px;
 }
 
-/* PROGRESS */
+/* ================= PROGRESS ================= */
 
 .progress {
     margin-bottom: 17px;
@@ -308,22 +375,42 @@ button {
 
 .progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, #635bff, #8b5cf6);
-    border-radius: 10px;
+    background: linear-gradient(90deg,#635bff,#8b5cf6);
 }
 
-/* PORTFOLIO */
+/* ================= BUTTON ================= */
+
+.btn {
+    padding: 11px 17px;
+    border: none;
+    border-radius: 9px;
+    font-weight: bold;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.primary {
+    background: #635bff;
+    color: white;
+}
+
+.outline {
+    background: white;
+    border: 1px solid #dfe3eb;
+}
+
+/* ================= PORTFOLIO ================= */
 
 .upload-box {
     background: white;
     border: 2px dashed #d9dce5;
     border-radius: 16px;
-    padding: 40px;
+    padding: 45px;
     text-align: center;
 }
 
 .upload-icon {
-    font-size: 38px;
+    font-size: 40px;
     margin-bottom: 10px;
 }
 
@@ -339,7 +426,7 @@ input[type="file"] {
 
 .certificates {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3,1fr);
     gap: 15px;
     margin-top: 20px;
 }
@@ -351,52 +438,21 @@ input[type="file"] {
     padding: 18px;
 }
 
-.certificate-icon {
-    font-size: 28px;
-}
-
 .certificate h4 {
     margin: 11px 0 5px;
     font-size: 13px;
 }
 
 .certificate p {
-    font-size: 11px;
     color: #777f8e;
-}
-
-/* AI */
-
-.ai-result {
-    background: #f6f5ff;
-    border: 1px solid #e2deff;
-    border-radius: 13px;
-    padding: 18px;
-    margin-top: 20px;
-    line-height: 1.6;
-    font-size: 13px;
-}
-
-.tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 13px;
-}
-
-.tag {
-    background: #ecebff;
-    color: #4f46e5;
-    padding: 7px 10px;
-    border-radius: 8px;
     font-size: 11px;
 }
 
-/* CAREER */
+/* ================= CAREER ================= */
 
 .career-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3,1fr);
     gap: 16px;
 }
 
@@ -424,11 +480,11 @@ input[type="file"] {
 .match {
     margin-top: 15px;
     color: #635bff;
-    font-size: 13px;
     font-weight: bold;
+    font-size: 13px;
 }
 
-/* PROFILE */
+/* ================= QR ================= */
 
 .profile-card {
     display: flex;
@@ -443,21 +499,21 @@ input[type="file"] {
     box-shadow: 0 3px 15px #dfe1e8;
 
     background:
-    linear-gradient(90deg, #111 10px, transparent 10px),
-    linear-gradient(#111 10px, transparent 10px),
-    linear-gradient(90deg, transparent 25px, #111 25px 35px, transparent 35px),
-    linear-gradient(transparent 25px, #111 25px 35px, transparent 35px);
+    linear-gradient(90deg,#111 10px,transparent 10px),
+    linear-gradient(#111 10px,transparent 10px),
+    linear-gradient(90deg,transparent 25px,#111 25px 35px,transparent 35px),
+    linear-gradient(transparent 25px,#111 25px 35px,transparent 35px);
 
     background-size: 35px 35px;
 }
 
-/* MODAL */
+/* ================= MODAL ================= */
 
 .modal {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(17, 24, 39, .65);
+    background: rgba(17,24,39,.65);
     align-items: center;
     justify-content: center;
     padding: 20px;
@@ -468,21 +524,11 @@ input[type="file"] {
 }
 
 .modal-box {
-    background: white;
     width: 450px;
     max-width: 100%;
-    padding: 25px;
+    background: white;
     border-radius: 17px;
-}
-
-.modal-box h2 {
-    margin-bottom: 10px;
-}
-
-.modal-box p {
-    color: #697386;
-    font-size: 13px;
-    line-height: 1.6;
+    padding: 25px;
 }
 
 .close {
@@ -494,9 +540,9 @@ input[type="file"] {
     cursor: pointer;
 }
 
-/* RESPONSIVE */
+/* ================= RESPONSIVE ================= */
 
-@media(max-width: 950px) {
+@media(max-width:950px) {
 
     .sidebar {
         width: 70px;
@@ -504,7 +550,7 @@ input[type="file"] {
 
     .logo span,
     .nav span,
-    .sidebar-footer {
+    .logout {
         display: none;
     }
 
@@ -514,7 +560,7 @@ input[type="file"] {
     }
 
     .stats {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2,1fr);
     }
 
     .grid,
@@ -523,11 +569,11 @@ input[type="file"] {
     }
 
     .certificates {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2,1fr);
     }
 }
 
-@media(max-width: 600px) {
+@media(max-width:600px) {
 
     .main {
         padding: 20px;
@@ -538,12 +584,8 @@ input[type="file"] {
         grid-template-columns: 1fr;
     }
 
-    .hero {
-        display: block;
-    }
-
-    .hero .btn {
-        margin-top: 20px;
+    .name-row {
+        grid-template-columns: 1fr;
     }
 
     .profile-card {
@@ -554,96 +596,247 @@ input[type="file"] {
 </style>
 </head>
 
+
 <body>
 
-<div class="app">
+<!-- ================= REGISTRATION ================= -->
 
-<!-- SIDEBAR -->
+<div class="auth-page" id="authPage">
+
+<div class="auth-box">
+
+<div class="auth-logo">
+    <div class="auth-logo-icon">✦</div>
+    Smart Assistant
+</div>
+
+<h1>Create your account</h1>
+
+<p class="subtitle">
+Build your digital portfolio, discover your strengths
+and explore possible career directions with AI.
+</p>
+
+<div class="error" id="error">
+Please fill in all required fields.
+</div>
+
+<form onsubmit="register(event)">
+
+<div class="name-row">
+
+<div class="form-group">
+
+<label>First Name</label>
+
+<input
+type="text"
+id="firstName"
+placeholder="Enter your first name"
+required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Last Name</label>
+
+<input
+type="text"
+id="lastName"
+placeholder="Enter your last name"
+required>
+
+</div>
+
+</div>
+
+
+<div class="form-group">
+
+<label>School</label>
+
+<input
+type="text"
+id="school"
+placeholder="Enter your school"
+required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Grade</label>
+
+<select id="grade" required>
+
+<option value="">Select your grade</option>
+<option>7</option>
+<option>8</option>
+<option>9</option>
+<option>10</option>
+<option>11</option>
+
+</select>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Email</label>
+
+<input
+type="email"
+id="email"
+placeholder="Enter your email"
+required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Password</label>
+
+<input
+type="password"
+id="password"
+placeholder="Create a password"
+required>
+
+</div>
+
+
+<button class="auth-btn" type="submit">
+Create Account
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+
+<!-- ================= APP ================= -->
+
+<div class="app" id="app">
 
 <aside class="sidebar">
 
 <div class="logo">
-    <div class="logo-icon">✦</div>
-    <span>Smart Assistant</span>
+
+<div class="logo-icon">
+✦
 </div>
+
+<span>Smart Assistant</span>
+
+</div>
+
 
 <nav class="nav">
 
-<button class="active" onclick="openPage('dashboard', this)">
-    📊 <span>Dashboard</span>
+<button class="active"
+onclick="openPage('dashboard',this)">
+📊 <span>Dashboard</span>
 </button>
 
-<button onclick="openPage('portfolio', this)">
-    📁 <span>My Portfolio</span>
+<button onclick="openPage('portfolio',this)">
+📁 <span>My Portfolio</span>
 </button>
 
-<button onclick="openPage('analysis', this)">
-    🤖 <span>AI Analysis</span>
+<button onclick="openPage('analysis',this)">
+🤖 <span>AI Analysis</span>
 </button>
 
-<button onclick="openPage('career', this)">
-    🎓 <span>Career Guide</span>
+<button onclick="openPage('career',this)">
+🎓 <span>Career Guide</span>
 </button>
 
-<button onclick="openPage('profile', this)">
-    📱 <span>QR Profile</span>
+<button onclick="openPage('profile',this)">
+📱 <span>QR Profile</span>
 </button>
 
 </nav>
 
-<div class="sidebar-footer">
-    AI-powered student portfolio<br>
-    & career guidance platform
+
+<div class="logout">
+
+<button onclick="logout()">
+↪ Log out
+</button>
+
 </div>
 
 </aside>
 
 
-<!-- MAIN -->
-
 <main class="main">
+
 
 <header class="topbar">
 
 <div>
-<h1 id="pageTitle">Dashboard</h1>
-<p>Welcome back. Here is your portfolio overview.</p>
+
+<h1 id="pageTitle">
+Dashboard
+</h1>
+
+<p>
+Welcome to your digital portfolio.
+</p>
+
 </div>
+
 
 <div class="user">
+
 <div>
-<b style="font-size:13px;">Student</b>
-<div style="font-size:11px;color:#777;">Grade 9</div>
+
+<b id="userName">
+Student
+</b>
+
+<div
+id="userGrade"
+style="font-size:11px;color:#777;">
+Grade
 </div>
 
-<div class="avatar">S</div>
+</div>
+
+<div
+class="avatar"
+id="avatar">
+S
+</div>
+
 </div>
 
 </header>
 
 
-<!-- DASHBOARD -->
+<!-- ================= DASHBOARD ================= -->
 
-<section id="dashboard" class="page active">
+<section
+id="dashboard"
+class="page active">
+
 
 <div class="hero">
 
-<div>
-
-<h2>Build your future with your achievements.</h2>
+<h2 id="welcomeText">
+Welcome to Smart Assistant!
+</h2>
 
 <p>
-Smart Assistant organizes your certificates,
-analyzes your strengths and helps you discover
-possible career directions.
+Start building your digital portfolio by adding
+your first achievement.
 </p>
-
-</div>
-
-<button class="btn white"
-onclick="openPage('portfolio')">
-+ Add Achievement
-</button>
 
 </div>
 
@@ -651,27 +844,72 @@ onclick="openPage('portfolio')">
 <div class="stats">
 
 <div class="card">
-<div class="stat-title">Achievements</div>
-<div class="stat-value" id="achievementCount">24</div>
-<div class="stat-note">+4 this year</div>
+
+<div class="stat-title">
+Achievements
 </div>
 
-<div class="card">
-<div class="stat-title">Portfolio Score</div>
-<div class="stat-value">82<span style="font-size:14px;">/100</span></div>
-<div class="stat-note">Strong profile</div>
+<div
+class="stat-value"
+id="achievementCount">
+0
 </div>
 
-<div class="card">
-<div class="stat-title">Top Strength</div>
-<div class="stat-value">STEM</div>
-<div class="stat-note">92% match</div>
+<div class="stat-note">
+Start building your portfolio
 </div>
 
+</div>
+
+
 <div class="card">
-<div class="stat-title">Career Matches</div>
-<div class="stat-value">6</div>
-<div class="stat-note">AI generated</div>
+
+<div class="stat-title">
+Portfolio Score
+</div>
+
+<div class="stat-value">
+—
+</div>
+
+<div class="stat-note">
+Not enough data yet
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="stat-title">
+Top Strength
+</div>
+
+<div class="stat-value">
+—
+</div>
+
+<div class="stat-note">
+Add achievements first
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="stat-title">
+Career Matches
+</div>
+
+<div class="stat-value">
+0
+</div>
+
+<div class="stat-note">
+AI needs portfolio data
+</div>
+
 </div>
 
 </div>
@@ -681,38 +919,33 @@ onclick="openPage('portfolio')">
 
 <div class="card">
 
-<h3>Recent Achievements</h3>
+<h3>
+Your Portfolio
+</h3>
 
-<div class="achievement">
-<div class="achievement-icon">🤖</div>
-<div>
-<b>Robotics Competition</b>
-<span>1st Place · STEM · 2026</span>
-</div>
-</div>
+<div
+id="emptyDashboard"
+style="text-align:center;padding:40px;color:#7b8392;">
 
-<div class="achievement">
-<div class="achievement-icon">💻</div>
-<div>
-<b>Programming Certificate</b>
-<span>Competitive Programming · 2026</span>
-</div>
+<div style="font-size:40px;">
+📂
 </div>
 
-<div class="achievement">
-<div class="achievement-icon">🔬</div>
-<div>
-<b>Science Fair</b>
-<span>Participant · Science · 2025</span>
-</div>
+<p style="margin:12px 0;">
+No achievements yet.
+</p>
+
+<button
+class="btn primary"
+onclick="openPage('portfolio')">
+
++ Add Achievement
+
+</button>
+
 </div>
 
-<div class="achievement">
-<div class="achievement-icon">⚽</div>
-<div>
-<b>School Football Tournament</b>
-<span>Team Achievement · 2025</span>
-</div>
+<div id="dashboardAchievements">
 </div>
 
 </div>
@@ -720,66 +953,18 @@ onclick="openPage('portfolio')">
 
 <div class="card">
 
-<h3>Strength Overview</h3>
+<h3>
+Portfolio Strength
+</h3>
 
-<div class="progress">
-<div class="progress-header">
-<span>STEM & Robotics</span>
-<b>92%</b>
-</div>
+<p
+style="font-size:13px;color:#777;line-height:1.6;">
 
-<div class="progress-bar">
-<div class="progress-fill" style="width:92%"></div>
-</div>
-</div>
+Your strength analysis will appear here
+after you add certificates, projects or
+other achievements.
 
-
-<div class="progress">
-<div class="progress-header">
-<span>Programming</span>
-<b>85%</b>
-</div>
-
-<div class="progress-bar">
-<div class="progress-fill" style="width:85%"></div>
-</div>
-</div>
-
-
-<div class="progress">
-<div class="progress-header">
-<span>Science</span>
-<b>70%</b>
-</div>
-
-<div class="progress-bar">
-<div class="progress-fill" style="width:70%"></div>
-</div>
-</div>
-
-
-<div class="progress">
-<div class="progress-header">
-<span>Sports</span>
-<b>65%</b>
-</div>
-
-<div class="progress-bar">
-<div class="progress-fill" style="width:65%"></div>
-</div>
-</div>
-
-
-<div class="progress">
-<div class="progress-header">
-<span>Volunteering</span>
-<b>45%</b>
-</div>
-
-<div class="progress-bar">
-<div class="progress-fill" style="width:45%"></div>
-</div>
-</div>
+</p>
 
 </div>
 
@@ -788,151 +973,186 @@ onclick="openPage('portfolio')">
 </section>
 
 
-<!-- PORTFOLIO -->
+<!-- ================= PORTFOLIO ================= -->
 
-<section id="portfolio" class="page">
+<section
+id="portfolio"
+class="page">
 
-<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+<div style="display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;">
 
 <div>
-<h2>My Portfolio</h2>
-<p style="color:#777;font-size:13px;margin-top:5px;">
-Manage your certificates and achievements.
+
+<h2>
+My Portfolio
+</h2>
+
+<p
+style="color:#777;font-size:13px;margin-top:5px;">
+
+Add certificates, diplomas and achievements.
+
 </p>
+
 </div>
 
-<label class="btn primary">
 
-+ Upload Certificate
+<button
+class="btn primary"
+onclick="openAchievementModal()">
 
-<input
-type="file"
-accept=".pdf,.png,.jpg,.jpeg"
-onchange="uploadCertificate(this)"
->
++ Add Achievement
 
-</label>
+</button>
 
 </div>
 
 
 <div class="upload-box">
 
-<div class="upload-icon">☁️</div>
+<div class="upload-icon">
+📁
+</div>
 
-<h3>Upload your achievements</h3>
+<h3>
+Your portfolio is empty
+</h3>
 
 <p>
-PDF, PNG or JPG files are supported.
+Add your first certificate or achievement.
 </p>
 
-<label class="btn outline">
+<button
+class="btn outline"
+onclick="openAchievementModal()">
 
-Choose File
+Add Achievement
 
-<input
-type="file"
-accept=".pdf,.png,.jpg,.jpeg"
-onchange="uploadCertificate(this)"
->
-
-</label>
-
-</div>
-
-
-<div class="certificates" id="certificates">
-
-<div class="certificate">
-<div class="certificate-icon">🤖</div>
-<h4>Robotics Competition</h4>
-<p>STEM · 2026 · 1st Place</p>
-</div>
-
-<div class="certificate">
-<div class="certificate-icon">💻</div>
-<h4>Programming Certificate</h4>
-<p>Programming · 2026</p>
-</div>
-
-<div class="certificate">
-<div class="certificate-icon">🔬</div>
-<h4>Science Fair</h4>
-<p>Science · 2025</p>
-</div>
-
-</div>
-
-</section>
-
-
-<!-- AI ANALYSIS -->
-
-<section id="analysis" class="page">
-
-<div class="card">
-
-<div style="display:flex;justify-content:space-between;align-items:center;">
-
-<div>
-
-<h2>AI Portfolio Analysis</h2>
-
-<p style="font-size:13px;color:#777;margin-top:6px;">
-Analyze your strengths and portfolio balance.
-</p>
-
-</div>
-
-<button class="btn primary" onclick="runAI()">
-Run AI Analysis
 </button>
 
 </div>
 
 
-<div style="display:flex;justify-content:center;margin:30px 0;">
+<div
+class="certificates"
+id="certificates">
+</div>
+
+</section>
+
+
+<!-- ================= AI ANALYSIS ================= -->
+
+<section
+id="analysis"
+class="page">
+
+<div class="card">
+
+<div style="display:flex;
+justify-content:space-between;
+align-items:center;">
+
+<div>
+
+<h2>
+AI Portfolio Analysis
+</h2>
+
+<p
+style="font-size:13px;color:#777;margin-top:6px;">
+
+AI analysis is based only on your portfolio data.
+
+</p>
+
+</div>
+
+
+<button
+class="btn primary"
+onclick="runAI()">
+
+Run AI Analysis
+
+</button>
+
+</div>
+
+
+<div
+id="analysisEmpty"
+style="text-align:center;
+padding:60px 20px;
+color:#777;">
+
+<div style="font-size:45px;">
+🤖
+</div>
+
+<h3 style="margin:15px 0 8px;">
+No data to analyze
+</h3>
+
+<p style="font-size:13px;">
+Add achievements to your portfolio first.
+</p>
+
+</div>
+
+
+<div
+id="analysisContent"
+style="display:none;">
 
 <canvas
 id="radar"
 width="600"
 height="400"
-style="max-width:100%;">
+style="max-width:100%;
+display:block;
+margin:30px auto;">
 </canvas>
-
-</div>
 
 
 <div class="grid">
 
-<div class="ai-result">
+<div class="card"
+style="background:#f7f6ff;">
 
-<b>🤖 AI Insight</b>
+<b>
+🤖 AI Insight
+</b>
 
-<br><br>
+<p
+style="font-size:13px;
+line-height:1.6;
+margin-top:10px;"
+id="aiInsight">
 
-Your portfolio shows a strong technical profile.
-Your strongest areas are STEM, robotics and programming.
-
-<br><br>
-
-To create a more balanced profile, consider adding
-research projects, volunteering and leadership activities.
+</p>
 
 </div>
 
 
-<div class="ai-result">
+<div class="card"
+style="background:#f7f6ff;">
 
-<b>Detected Interests</b>
+<b>
+Detected Interests
+</b>
 
-<div class="tags">
-
-<span class="tag">Robotics</span>
-<span class="tag">Programming</span>
-<span class="tag">Engineering</span>
-<span class="tag">Mathematics</span>
-<span class="tag">Technology</span>
+<div
+class="tags"
+id="tags"
+style="display:flex;
+gap:8px;
+flex-wrap:wrap;
+margin-top:15px;">
+</div>
 
 </div>
 
@@ -945,92 +1165,73 @@ research projects, volunteering and leadership activities.
 </section>
 
 
-<!-- CAREER -->
+<!-- ================= CAREER ================= -->
 
-<section id="career" class="page">
+<section
+id="career"
+class="page">
 
-<div class="card" style="margin-bottom:18px;">
+<div class="card"
+style="margin-bottom:18px;">
 
-<h2>AI Career Guide</h2>
+<h2>
+AI Career Guide
+</h2>
 
-<p style="font-size:13px;color:#777;margin-top:7px;">
-Possible directions based on your portfolio.
-These are suggestions, not final decisions.
+<p
+style="font-size:13px;color:#777;margin-top:7px;">
+
+Possible career directions based on your
+portfolio.
+
 </p>
 
 </div>
 
 
-<div class="career-grid">
+<div
+id="careerEmpty"
+class="card"
+style="text-align:center;padding:60px;color:#777;">
 
+<div style="font-size:45px;">
+🎓
+</div>
+
+<h3 style="margin:15px 0 8px;">
+Build your portfolio first
+</h3>
+
+<p style="font-size:13px;">
+Add achievements so Smart Assistant can
+analyze your interests.
+</p>
+
+</div>
+
+
+<div
+id="careerContent"
+class="career-grid"
+style="display:none;">
 
 <div class="career">
 
-<div class="career-icon">🤖</div>
+<div class="career-icon">
+🤖
+</div>
 
-<h3>Robotics Engineering</h3>
+<h3>
+Robotics Engineering
+</h3>
 
 <p>
-Combines programming, electronics, mechanics
-and engineering problem solving.
+Combines programming, electronics,
+mechanics and engineering.
 </p>
 
 <div class="match">
-92% portfolio match
-</div>
-
-</div>
-
-
-<div class="career">
-
-<div class="career-icon">💻</div>
-
-<h3>Software Engineering</h3>
-
-<p>
-Focuses on creating applications,
-systems and software solutions.
-</p>
-
-<div class="match">
-88% portfolio match
-</div>
-
-</div>
-
-
-<div class="career">
-
-<div class="career-icon">📊</div>
-
-<h3>Data Science</h3>
-
-<p>
-Uses mathematics, programming and data
-to solve complex problems.
-</p>
-
-<div class="match">
-81% portfolio match
-</div>
-
-</div>
-
-
-<div class="career">
-
-<div class="career-icon">🧠</div>
-
-<h3>Artificial Intelligence</h3>
-
-<p>
-Combines programming, mathematics and
-machine learning to create intelligent systems.
-</p>
-
-<div class="match">
-79% portfolio match
+Portfolio match: calculated by AI
 </div>
 
 </div>
@@ -1038,17 +1239,21 @@ machine learning to create intelligent systems.
 
 <div class="career">
 
-<div class="career-icon">⚙️</div>
+<div class="career-icon">
+💻
+</div>
 
-<h3>Mechanical Engineering</h3>
+<h3>
+Software Engineering
+</h3>
 
 <p>
-Designs machines, mechanisms and
-technical systems.
+Focuses on applications, systems
+and software development.
 </p>
 
 <div class="match">
-76% portfolio match
+Portfolio match: calculated by AI
 </div>
 
 </div>
@@ -1056,65 +1261,21 @@ technical systems.
 
 <div class="career">
 
-<div class="career-icon">🔬</div>
+<div class="career-icon">
+📊
+</div>
 
-<h3>Research & Science</h3>
+<h3>
+Data Science
+</h3>
 
 <p>
-Explores scientific questions through
-experiments, analysis and innovation.
+Uses mathematics, programming and
+data analysis.
 </p>
 
 <div class="match">
-71% portfolio match
-</div>
-
-</div>
-
-</div>
-
-
-<div class="card" style="margin-top:20px;">
-
-<h3>🚀 How to strengthen your portfolio</h3>
-
-<div class="achievement">
-
-<div class="achievement-icon">🔬</div>
-
-<div>
-<b>Research Project</b>
-<span>
-Complete a small independent science or technology project.
-</span>
-</div>
-
-</div>
-
-
-<div class="achievement">
-
-<div class="achievement-icon">🌍</div>
-
-<div>
-<b>Community Activity</b>
-<span>
-Add a volunteering or social-impact project.
-</span>
-</div>
-
-</div>
-
-
-<div class="achievement">
-
-<div class="achievement-icon">💻</div>
-
-<div>
-<b>Personal Project</b>
-<span>
-Build and document a programming or robotics project.
-</span>
+Portfolio match: calculated by AI
 </div>
 
 </div>
@@ -1124,18 +1285,22 @@ Build and document a programming or robotics project.
 </section>
 
 
-<!-- QR PROFILE -->
+<!-- ================= PROFILE ================= -->
 
-<section id="profile" class="page">
+<section
+id="profile"
+class="page">
 
 <div class="card">
 
-<h2>Public QR Profile</h2>
+<h2>
+Public QR Profile
+</h2>
 
-<p style="font-size:13px;color:#777;margin:7px 0 25px;">
+<p
+style="font-size:13px;color:#777;margin:7px 0 25px;">
 
-A compact digital profile that can be shared
-with universities, mentors and competition organizers.
+Your digital student profile.
 
 </p>
 
@@ -1144,19 +1309,36 @@ with universities, mentors and competition organizers.
 
 <div class="qr"></div>
 
+
 <div>
 
-<h2 style="margin-bottom:10px;">
-Student Portfolio
+<h2 id="profileName">
+Student
 </h2>
 
-<p style="font-size:13px;color:#777;line-height:1.8;">
+<p
+style="font-size:13px;
+color:#777;
+line-height:1.8;
+margin-top:10px;">
 
-24 Achievements<br>
-STEM · Programming · Robotics<br>
-Portfolio Score: 82/100
+<span id="profileSchool">
+School
+</span>
+<br>
+
+<span id="profileGrade">
+Grade
+</span>
+<br>
+
+Achievements:
+<span id="profileAchievements">
+0
+</span>
 
 </p>
+
 
 <button
 class="btn primary"
@@ -1180,39 +1362,181 @@ Copy Profile Link
 </div>
 
 
-<!-- MODAL -->
+<!-- ================= ACHIEVEMENT MODAL ================= -->
 
-<div class="modal" id="modal">
+<div
+class="modal"
+id="achievementModal">
 
 <div class="modal-box">
 
-<button class="close" onclick="closeModal()">
+<button
+class="close"
+onclick="closeAchievementModal()">
 ×
 </button>
 
-<h2>AI Analysis Complete</h2>
+<h2>
+Add Achievement
+</h2>
 
-<p style="margin-top:10px;">
+<p
+style="font-size:13px;color:#777;margin:7px 0 20px;">
 
-Your portfolio has been analyzed successfully.
+Add information about your certificate,
+competition, project or other achievement.
 
-<br><br>
+</p>
 
-<strong>Strong areas:</strong><br>
-STEM, Robotics and Programming.
 
-<br><br>
+<div class="form-group">
 
-<strong>Suggested next step:</strong><br>
-Add a research project or community activity
-to make your portfolio more diverse.
+<label>
+Achievement Title
+</label>
 
+<input
+type="text"
+id="achievementTitle"
+placeholder="Example: Mathematics Olympiad">
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Category
+</label>
+
+<select id="achievementCategory">
+
+<option value="">
+Select category
+</option>
+
+<option>
+STEM
+</option>
+
+<option>
+Programming
+</option>
+
+<option>
+Science
+</option>
+
+<option>
+Mathematics
+</option>
+
+<option>
+Sports
+</option>
+
+<option>
+Volunteering
+</option>
+
+<option>
+Arts
+</option>
+
+<option>
+Leadership
+</option>
+
+</select>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Year
+</label>
+
+<input
+type="number"
+id="achievementYear"
+placeholder="2026">
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Result / Award
+</label>
+
+<input
+type="text"
+id="achievementResult"
+placeholder="Example: 1st Place">
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Description
+</label>
+
+<input
+type="text"
+id="achievementDescription"
+placeholder="Short description">
+
+</div>
+
+
+<button
+class="auth-btn"
+onclick="addAchievement()">
+
+Add Achievement
+
+</button>
+
+</div>
+
+</div>
+
+
+<!-- ================= AI MODAL ================= -->
+
+<div
+class="modal"
+id="aiModal">
+
+<div class="modal-box">
+
+<button
+class="close"
+onclick="closeAI()">
+×
+</button>
+
+<h2>
+🤖 AI Analysis Complete
+</h2>
+
+<p
+id="aiModalText"
+style="margin-top:12px;
+font-size:13px;
+color:#697386;
+line-height:1.6;">
 </p>
 
 <button
 class="btn primary"
 style="margin-top:18px;"
-onclick="closeModal()">
+onclick="closeAI()">
 
 Continue
 
@@ -1225,7 +1549,134 @@ Continue
 
 <script>
 
-/* PAGE NAVIGATION */
+/* ================= USER DATA ================= */
+
+let user = null;
+
+let achievements = [];
+
+
+/* ================= REGISTRATION ================= */
+
+function register(event) {
+
+event.preventDefault();
+
+const firstName =
+document.getElementById("firstName").value.trim();
+
+const lastName =
+document.getElementById("lastName").value.trim();
+
+const school =
+document.getElementById("school").value.trim();
+
+const grade =
+document.getElementById("grade").value;
+
+const email =
+document.getElementById("email").value.trim();
+
+const password =
+document.getElementById("password").value;
+
+
+if(!firstName ||
+!lastName ||
+!school ||
+!grade ||
+!email ||
+!password) {
+
+document.getElementById("error")
+.style.display = "block";
+
+return;
+
+}
+
+
+user = {
+
+firstName,
+lastName,
+school,
+grade,
+email
+};
+
+
+achievements = [];
+
+
+localStorage.setItem(
+"smartAssistantUser",
+JSON.stringify(user)
+);
+
+localStorage.setItem(
+"smartAssistantAchievements",
+JSON.stringify(achievements)
+);
+
+
+showApp();
+
+}
+
+
+/* ================= SHOW APP ================= */
+
+function showApp() {
+
+document.getElementById("authPage")
+.style.display = "none";
+
+document.getElementById("app")
+.style.display = "flex";
+
+
+document.getElementById("userName")
+.textContent =
+user.firstName + " " + user.lastName;
+
+
+document.getElementById("userGrade")
+.textContent =
+"Grade " + user.grade;
+
+
+document.getElementById("avatar")
+.textContent =
+user.firstName.charAt(0).toUpperCase();
+
+
+document.getElementById("welcomeText")
+.textContent =
+"Welcome, " + user.firstName + "!";
+
+
+document.getElementById("profileName")
+.textContent =
+user.firstName + " " + user.lastName;
+
+
+document.getElementById("profileSchool")
+.textContent =
+user.school;
+
+
+document.getElementById("profileGrade")
+.textContent =
+"Grade " + user.grade;
+
+
+updatePortfolio();
+
+}
+
+
+/* ================= PAGE NAVIGATION ================= */
 
 const pageTitles = {
 
@@ -1240,21 +1691,25 @@ profile: "QR Profile"
 
 function openPage(page, button) {
 
-document.querySelectorAll(".page")
-.forEach(function(section) {
+document
+.querySelectorAll(".page")
+.forEach(function(item) {
 
-section.classList.remove("active");
+item.classList.remove("active");
 
 });
 
-document.getElementById(page)
+
+document
+.getElementById(page)
 .classList.add("active");
 
 
-document.querySelectorAll(".nav button")
-.forEach(function(btn) {
+document
+.querySelectorAll(".nav button")
+.forEach(function(item) {
 
-btn.classList.remove("active");
+item.classList.remove("active");
 
 });
 
@@ -1267,10 +1722,8 @@ button.classList.add("active");
 
 
 document.getElementById("pageTitle")
-.textContent = pageTitles[page];
-
-
-window.scrollTo(0,0);
+.textContent =
+pageTitles[page];
 
 
 if(page === "analysis") {
@@ -1282,17 +1735,160 @@ drawRadar();
 }
 
 
-/* FILE UPLOAD */
+/* ================= ACHIEVEMENT MODAL ================= */
 
-function uploadCertificate(input) {
+function openAchievementModal() {
 
-if(!input.files.length) return;
+document
+.getElementById("achievementModal")
+.classList.add("show");
 
-const file = input.files[0];
+}
 
-const container =
+
+function closeAchievementModal() {
+
+document
+.getElementById("achievementModal")
+.classList.remove("show");
+
+}
+
+
+/* ================= ADD ACHIEVEMENT ================= */
+
+function addAchievement() {
+
+const title =
+document.getElementById("achievementTitle")
+.value.trim();
+
+const category =
+document.getElementById("achievementCategory")
+.value;
+
+const year =
+document.getElementById("achievementYear")
+.value;
+
+const result =
+document.getElementById("achievementResult")
+.value.trim();
+
+const description =
+document.getElementById("achievementDescription")
+.value.trim();
+
+
+if(!title || !category || !year) {
+
+alert("Please enter the title, category and year.");
+
+return;
+
+}
+
+
+const achievement = {
+
+title,
+category,
+year,
+result,
+description
+
+};
+
+
+achievements.push(achievement);
+
+
+localStorage.setItem(
+"smartAssistantAchievements",
+JSON.stringify(achievements)
+);
+
+
+document.getElementById("achievementTitle")
+.value = "";
+
+document.getElementById("achievementCategory")
+.value = "";
+
+document.getElementById("achievementYear")
+.value = "";
+
+document.getElementById("achievementResult")
+.value = "";
+
+document.getElementById("achievementDescription")
+.value = "";
+
+
+closeAchievementModal();
+
+updatePortfolio();
+
+alert("Achievement added successfully!");
+
+}
+
+
+/* ================= UPDATE PORTFOLIO ================= */
+
+function updatePortfolio() {
+
+const count =
+achievements.length;
+
+
+document.getElementById(
+"achievementCount"
+).textContent = count;
+
+
+document.getElementById(
+"profileAchievements"
+).textContent = count;
+
+
+const certificates =
 document.getElementById("certificates");
 
+const dashboardAchievements =
+document.getElementById("dashboardAchievements");
+
+
+certificates.innerHTML = "";
+
+dashboardAchievements.innerHTML = "";
+
+
+if(count === 0) {
+
+document.getElementById(
+"emptyDashboard"
+).style.display = "block";
+
+document.querySelector(
+".upload-box h3"
+).textContent =
+"Your portfolio is empty";
+
+return;
+
+}
+
+
+document.getElementById(
+"emptyDashboard"
+).style.display = "none";
+
+
+achievements.forEach(function(item) {
+
+
+/* Portfolio card */
 
 const card =
 document.createElement("div");
@@ -1302,127 +1898,300 @@ card.className = "certificate";
 
 card.innerHTML = `
 
-<div class="certificate-icon">
-📄
+<div style="font-size:28px;">
+${getIcon(item.category)}
 </div>
 
-<h4>${file.name}</h4>
+<h4>
+${item.title}
+</h4>
 
 <p>
-New achievement · Added now
+${item.category} · ${item.year}
+</p>
+
+<p style="margin-top:5px;">
+${item.result || "Achievement"}
 </p>
 
 `;
 
 
-container.prepend(card);
+certificates.appendChild(card);
 
 
-/* Update achievement number */
+/* Dashboard item */
 
-const count =
-document.getElementById("achievementCount");
+const row =
+document.createElement("div");
 
-count.textContent =
-parseInt(count.textContent) + 1;
+row.className = "achievement";
 
 
-input.value = "";
+row.innerHTML = `
+
+<div class="achievement-icon">
+${getIcon(item.category)}
+</div>
+
+<div>
+
+<b>
+${item.title}
+</b>
+
+<span>
+${item.category} · ${item.year}
+</span>
+
+</div>
+
+`;
+
+
+dashboardAchievements.appendChild(row);
+
+});
+
+
+document.querySelector(
+".upload-box h3"
+).textContent =
+"Add another achievement";
+
+
+updateAIState();
 
 }
 
 
-/* AI MODAL */
+/* ================= ICON ================= */
 
-function runAI() {
+function getIcon(category) {
 
-document.getElementById("modal")
-.classList.add("show");
+const icons = {
 
-}
+STEM: "🔬",
+Programming: "💻",
+Science: "🧪",
+Mathematics: "📐",
+Sports: "⚽",
+Volunteering: "🌍",
+Arts: "🎨",
+Leadership: "⭐"
 
+};
 
-function closeModal() {
-
-document.getElementById("modal")
-.classList.remove("show");
-
-}
-
-
-/* COPY PROFILE */
-
-function copyProfile() {
-
-navigator.clipboard.writeText(
-window.location.href
-);
-
-alert("Profile link copied!");
+return icons[category] || "🏆";
 
 }
 
 
-/* RADAR CHART */
+/* ================= AI ================= */
+
+function updateAIState() {
+
+const hasData =
+achievements.length > 0;
+
+
+document.getElementById(
+"analysisEmpty"
+).style.display =
+hasData ? "none" : "block";
+
+
+document.getElementById(
+"analysisContent"
+).style.display =
+hasData ? "block" : "none";
+
+
+document.getElementById(
+"careerEmpty"
+).style.display =
+hasData ? "none" : "block";
+
+
+document.getElementById(
+"careerContent"
+).style.display =
+hasData ? "grid" : "none";
+
+
+if(hasData) {
+
+generateAIInsight();
+
+}
+
+}
+
+
+/* ================= AI INSIGHT ================= */
+
+function generateAIInsight() {
+
+const categories = {};
+
+
+achievements.forEach(function(item) {
+
+if(!categories[item.category]) {
+
+categories[item.category] = 0;
+
+}
+
+categories[item.category]++;
+
+});
+
+
+let strongest = "";
+
+let max = 0;
+
+
+for(const category in categories) {
+
+if(categories[category] > max) {
+
+max = categories[category];
+
+strongest = category;
+
+}
+
+}
+
+
+document.getElementById(
+"aiInsight"
+).textContent =
+
+"Your portfolio currently shows the strongest focus in " +
+strongest +
+". Add more achievements from different areas to create a more balanced profile.";
+
+
+const tags =
+document.getElementById("tags");
+
+tags.innerHTML = "";
+
+
+Object.keys(categories)
+.forEach(function(category) {
+
+const tag =
+document.createElement("span");
+
+tag.className = "tag";
+
+tag.style.background = "#ecebff";
+
+tag.style.color = "#4f46e5";
+
+tag.style.padding = "7px 10px";
+
+tag.style.borderRadius = "8px";
+
+tag.style.fontSize = "11px";
+
+tag.textContent =
+category;
+
+tags.appendChild(tag);
+
+});
+
+
+drawRadar();
+
+}
+
+
+/* ================= RADAR ================= */
 
 function drawRadar() {
 
 const canvas =
 document.getElementById("radar");
 
+if(!canvas) return;
+
+
 const ctx =
 canvas.getContext("2d");
 
+const width =
+canvas.width;
 
-const width = canvas.width;
-const height = canvas.height;
-
-ctx.clearRect(0,0,width,height);
-
-
-const centerX = width / 2;
-const centerY = height / 2 + 10;
-
-const radius = 130;
+const height =
+canvas.height;
 
 
-const labels = [
+ctx.clearRect(
+0,0,width,height
+);
+
+
+if(achievements.length === 0)
+return;
+
+
+const categories = [
 
 "STEM",
 "Programming",
 "Science",
+"Mathematics",
 "Sports",
-"Volunteering",
-"Creativity"
+"Volunteering"
 
 ];
 
 
-const values = [
+const values =
+categories.map(function(category) {
 
-0.92,
-0.85,
-0.70,
-0.65,
-0.45,
-0.50
+return Math.min(
 
-];
+achievements.filter(
+item => item.category === category
+).length / 3,
+
+1
+
+);
+
+});
 
 
-function point(index, r) {
+const centerX =
+width / 2;
+
+const centerY =
+height / 2;
+
+const radius =
+130;
+
+
+function point(index,r) {
 
 const angle =
-- Math.PI / 2 +
-index * 2 * Math.PI / 6;
+-Math.PI/2 +
+index*2*Math.PI/6;
 
 return [
 
 centerX +
-Math.cos(angle) * r,
+Math.cos(angle)*r,
 
 centerY +
-Math.sin(angle) * r
+Math.sin(angle)*r
 
 ];
 
@@ -1431,63 +2200,32 @@ Math.sin(angle) * r
 
 /* GRID */
 
-ctx.strokeStyle = "#dfe2ea";
+ctx.strokeStyle =
+"#dfe2ea";
+
 ctx.lineWidth = 1;
 
 
-for(let level = 1; level <= 4; level++) {
+for(let level=1;
+level<=4;
+level++) {
 
 ctx.beginPath();
 
-for(let i = 0; i < 6; i++) {
+for(let i=0;i<6;i++) {
 
 const p =
-point(i, radius * level / 4);
+point(i,radius*level/4);
 
-if(i === 0) {
-
+if(i===0)
 ctx.moveTo(p[0],p[1]);
-
-} else {
-
+else
 ctx.lineTo(p[0],p[1]);
-
-}
 
 }
 
 ctx.closePath();
-
 ctx.stroke();
-
-}
-
-
-/* AXIS */
-
-for(let i = 0; i < 6; i++) {
-
-const p =
-point(i,radius);
-
-ctx.beginPath();
-
-ctx.moveTo(centerX,centerY);
-
-ctx.lineTo(p[0],p[1]);
-
-ctx.stroke();
-
-
-ctx.fillStyle = "#697386";
-
-ctx.font = "12px Arial";
-
-ctx.fillText(
-labels[i],
-p[0] - 25,
-p[1] + (p[1] < centerY ? -8 : 18)
-);
 
 }
 
@@ -1497,31 +2235,25 @@ p[1] + (p[1] < centerY ? -8 : 18)
 ctx.beginPath();
 
 
-for(let i = 0; i < 6; i++) {
+values.forEach(function(value,i) {
 
 const p =
-point(i,radius * values[i]);
+point(i,radius*value);
 
-if(i === 0) {
-
+if(i===0)
 ctx.moveTo(p[0],p[1]);
-
-} else {
-
+else
 ctx.lineTo(p[0],p[1]);
 
-}
-
-}
+});
 
 
 ctx.closePath();
 
 ctx.fillStyle =
-"rgba(99,91,255,0.20)";
+"rgba(99,91,255,.2)";
 
 ctx.fill();
-
 
 ctx.strokeStyle =
 "#635bff";
@@ -1530,12 +2262,136 @@ ctx.lineWidth = 3;
 
 ctx.stroke();
 
+
+/* LABELS */
+
+ctx.fillStyle =
+"#697386";
+
+ctx.font =
+"12px Arial";
+
+
+categories.forEach(function(label,i) {
+
+const p =
+point(i,radius+25);
+
+ctx.fillText(
+label,
+p[0]-25,
+p[1]
+);
+
+});
+
 }
 
 
-/* INITIAL CHART */
+/* ================= RUN AI ================= */
 
-drawRadar();
+function runAI() {
+
+if(achievements.length === 0) {
+
+alert(
+"Add at least one achievement before running AI Analysis."
+);
+
+return;
+
+}
+
+
+generateAIInsight();
+
+
+document.getElementById(
+"aiModalText"
+).textContent =
+
+"Smart Assistant analyzed " +
+achievements.length +
+" achievement(s). Your portfolio data has been processed to identify your interests and possible career directions.";
+
+
+document.getElementById(
+"aiModal"
+).classList.add("show");
+
+}
+
+
+function closeAI() {
+
+document.getElementById(
+"aiModal"
+).classList.remove("show");
+
+}
+
+
+/* ================= COPY PROFILE ================= */
+
+function copyProfile() {
+
+navigator.clipboard
+.writeText(window.location.href);
+
+alert("Profile link copied!");
+
+}
+
+
+/* ================= LOGOUT ================= */
+
+function logout() {
+
+localStorage.removeItem(
+"smartAssistantUser"
+);
+
+localStorage.removeItem(
+"smartAssistantAchievements"
+);
+
+location.reload();
+
+}
+
+
+/* ================= LOAD SAVED DATA ================= */
+
+window.onload = function() {
+
+const savedUser =
+localStorage.getItem(
+"smartAssistantUser"
+);
+
+const savedAchievements =
+localStorage.getItem(
+"smartAssistantAchievements"
+);
+
+
+if(savedUser) {
+
+user =
+JSON.parse(savedUser);
+
+
+achievements =
+savedAchievements
+? JSON.parse(savedAchievements)
+: [];
+
+
+showApp();
+
+}
+
+};
 
 </script>
 
