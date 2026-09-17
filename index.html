@@ -1,377 +1,1542 @@
 <!DOCTYPE html>
-
-<html lang="ru">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FinMedia — Финансовые новости и аналитика нового поколения</title>
-  <meta name="description" content="FinMedia — первая профессиональная медиа-платформа, созданная молодёжью для молодёжи. Бизнес, инвестиции, стартапы, финансы.">
-  <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Assistant</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f7fb;
+    color: #172033;
+}
+
+button, input {
+    font-family: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+.app {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar {
+    width: 250px;
+    background: #111827;
+    color: white;
+    padding: 25px 18px;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 40px;
+}
+
+.logo-icon {
+    width: 38px;
+    height: 38px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border-radius: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.nav button {
+    border: none;
+    background: transparent;
+    color: #aeb7c8;
+    text-align: left;
+    padding: 13px;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+.nav button:hover,
+.nav button.active {
+    background: #252d3d;
+    color: white;
+}
+
+.sidebar-footer {
+    position: absolute;
+    bottom: 25px;
+    left: 25px;
+    color: #7f899b;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+/* MAIN */
+
+.main {
+    margin-left: 250px;
+    width: calc(100% - 250px);
+    padding: 30px 40px;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+}
+
+.topbar h1 {
+    font-size: 28px;
+}
+
+.topbar p {
+    color: #737b8c;
+    font-size: 13px;
+    margin-top: 6px;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.avatar {
+    width: 43px;
+    height: 43px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+/* PAGES */
+
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+/* HERO */
+
+.hero {
+    background: linear-gradient(120deg, #4f46e5, #7c3aed);
+    color: white;
+    border-radius: 20px;
+    padding: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+}
+
+.hero h2 {
+    font-size: 26px;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    max-width: 650px;
+    font-size: 14px;
+    line-height: 1.6;
+    opacity: .9;
+}
+
+/* BUTTONS */
+
+.btn {
+    padding: 11px 17px;
+    border-radius: 9px;
+    border: none;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.primary {
+    background: #635bff;
+    color: white;
+}
+
+.white {
+    background: white;
+    color: #4f46e5;
+}
+
+.outline {
+    background: white;
+    color: #172033;
+    border: 1px solid #e1e5ec;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+/* CARDS */
+
+.card {
+    background: white;
+    border: 1px solid #e5e8ef;
+    border-radius: 16px;
+    padding: 20px;
+}
+
+.card h3 {
+    font-size: 16px;
+    margin-bottom: 17px;
+}
+
+/* STATS */
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.stat-title {
+    color: #737b8c;
+    font-size: 12px;
+    margin-bottom: 9px;
+}
+
+.stat-value {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.stat-note {
+    color: #16a34a;
+    font-size: 11px;
+    margin-top: 6px;
+}
+
+/* GRID */
+
+.grid {
+    display: grid;
+    grid-template-columns: 1.1fr .9fr;
+    gap: 18px;
+}
+
+/* ACHIEVEMENTS */
+
+.achievement {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 13px 0;
+    border-bottom: 1px solid #edf0f4;
+}
+
+.achievement:last-child {
+    border-bottom: none;
+}
+
+.achievement-icon {
+    width: 40px;
+    height: 40px;
+    background: #f0efff;
+    border-radius: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 19px;
+}
+
+.achievement b {
+    font-size: 13px;
+}
+
+.achievement span {
+    display: block;
+    color: #7b8392;
+    font-size: 11px;
+    margin-top: 4px;
+}
+
+/* PROGRESS */
+
+.progress {
+    margin-bottom: 17px;
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-bottom: 7px;
+}
+
+.progress-bar {
+    height: 8px;
+    background: #edf0f5;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #635bff, #8b5cf6);
+    border-radius: 10px;
+}
+
+/* PORTFOLIO */
+
+.upload-box {
+    background: white;
+    border: 2px dashed #d9dce5;
+    border-radius: 16px;
+    padding: 40px;
+    text-align: center;
+}
+
+.upload-icon {
+    font-size: 38px;
+    margin-bottom: 10px;
+}
+
+.upload-box p {
+    color: #777f8e;
+    font-size: 13px;
+    margin: 8px 0 20px;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.certificates {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.certificate {
+    background: white;
+    border: 1px solid #e5e8ef;
+    border-radius: 14px;
+    padding: 18px;
+}
+
+.certificate-icon {
+    font-size: 28px;
+}
+
+.certificate h4 {
+    margin: 11px 0 5px;
+    font-size: 13px;
+}
+
+.certificate p {
+    font-size: 11px;
+    color: #777f8e;
+}
+
+/* AI */
+
+.ai-result {
+    background: #f6f5ff;
+    border: 1px solid #e2deff;
+    border-radius: 13px;
+    padding: 18px;
+    margin-top: 20px;
+    line-height: 1.6;
+    font-size: 13px;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 13px;
+}
+
+.tag {
+    background: #ecebff;
+    color: #4f46e5;
+    padding: 7px 10px;
+    border-radius: 8px;
+    font-size: 11px;
+}
+
+/* CAREER */
+
+.career-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.career {
+    background: white;
+    border: 1px solid #e5e8ef;
+    border-radius: 16px;
+    padding: 20px;
+}
+
+.career-icon {
+    font-size: 30px;
+}
+
+.career h3 {
+    margin: 12px 0 8px;
+}
+
+.career p {
+    color: #737b8c;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.match {
+    margin-top: 15px;
+    color: #635bff;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+/* PROFILE */
+
+.profile-card {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.qr {
+    width: 170px;
+    height: 170px;
+    border: 10px solid white;
+    box-shadow: 0 3px 15px #dfe1e8;
+
+    background:
+    linear-gradient(90deg, #111 10px, transparent 10px),
+    linear-gradient(#111 10px, transparent 10px),
+    linear-gradient(90deg, transparent 25px, #111 25px 35px, transparent 35px),
+    linear-gradient(transparent 25px, #111 25px 35px, transparent 35px);
+
+    background-size: 35px 35px;
+}
+
+/* MODAL */
+
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(17, 24, 39, .65);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-box {
+    background: white;
+    width: 450px;
+    max-width: 100%;
+    padding: 25px;
+    border-radius: 17px;
+}
+
+.modal-box h2 {
+    margin-bottom: 10px;
+}
+
+.modal-box p {
+    color: #697386;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.close {
+    float: right;
+    border: none;
+    background: #f0f1f4;
+    border-radius: 7px;
+    padding: 5px 9px;
+    cursor: pointer;
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 950px) {
+
+    .sidebar {
+        width: 70px;
+    }
+
+    .logo span,
+    .nav span,
+    .sidebar-footer {
+        display: none;
+    }
+
+    .main {
+        margin-left: 70px;
+        width: calc(100% - 70px);
+    }
+
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grid,
+    .career-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .certificates {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(max-width: 600px) {
+
+    .main {
+        padding: 20px;
+    }
+
+    .stats,
+    .certificates {
+        grid-template-columns: 1fr;
+    }
+
+    .hero {
+        display: block;
+    }
+
+    .hero .btn {
+        margin-top: 20px;
+    }
+
+    .profile-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+</style>
 </head>
+
 <body>
 
-<!-- ══ TICKER ══ -->
+<div class="app">
 
-<div class="ticker-bar">
-  <div class="ticker-inner" id="ticker-inner"></div>
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+<div class="logo">
+    <div class="logo-icon">✦</div>
+    <span>Smart Assistant</span>
 </div>
 
-<!-- ══ HEADER ══ -->
+<nav class="nav">
 
-<div class="site-header" id="site-header">
-  <div class="header-inner">
-    <button class="burger" id="burger-btn" aria-label="Меню">
-      <span></span><span></span><span></span>
-    </button>
-    <a href="index.html" class="logo">FinMedia</a>
-    <nav class="header-nav">
-      <a href="#" class="active">Бизнес</a>
-      <a href="#">Финансы</a>
-      <a href="#">Инвестиции</a>
-      <a href="#">Стартапы</a>
-      <a href="#">Маркетинг</a>
-    </nav>
-    <div class="header-right">
-      <button class="search-btn" id="search-btn" aria-label="Поиск">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-        </svg>
-      </button>
-      <a href="submit.html" class="btn-write">Написать статью</a>
-    </div>
-  </div>
+<button class="active" onclick="openPage('dashboard', this)">
+    📊 <span>Dashboard</span>
+</button>
+
+<button onclick="openPage('portfolio', this)">
+    📁 <span>My Portfolio</span>
+</button>
+
+<button onclick="openPage('analysis', this)">
+    🤖 <span>AI Analysis</span>
+</button>
+
+<button onclick="openPage('career', this)">
+    🎓 <span>Career Guide</span>
+</button>
+
+<button onclick="openPage('profile', this)">
+    📱 <span>QR Profile</span>
+</button>
+
+</nav>
+
+<div class="sidebar-footer">
+    AI-powered student portfolio<br>
+    & career guidance platform
 </div>
 
-<!-- ══ DRAWER ══ -->
+</aside>
 
-<div class="drawer-overlay" id="drawer-overlay"></div>
-<div class="drawer" id="drawer">
-  <button class="drawer-close" id="drawer-close">✕</button>
-  <div class="drawer-logo"><a href="index.html">FinMedia</a></div>
-  <div class="drawer-section-title">Рубрики</div>
-  <nav>
-    <a href="#" class="cat-link active" style="font-weight:700; color:var(--red);">Все</a>
-    <a href="#" class="cat-link">Бизнес</a>
-    <a href="#" class="cat-link">Финансы</a>
-    <a href="#" class="cat-link">Инвестиции</a>
-    <a href="#" class="cat-link">Биржа</a>
-    <a href="#" class="cat-link">Стартапы</a>
-    <a href="#" class="cat-link">Недвижимость</a>
-    <a href="#" class="cat-link">Маркетинг</a>
-    <a href="#" class="cat-link">Авто</a>
-    <a href="#" class="cat-link">Энергетика</a>
-    <a href="#" class="cat-link">Транспорт</a>
-  </nav>
-  <div class="drawer-section-title">Ещё</div>
-  <nav>
-    <a href="#">Авторы</a>
-    <a href="#">Архив</a>
-    <a href="submit.html">Написать статью</a>
-    <a href="admin.html">Редакция</a>
-  </nav>
-  <a href="submit.html" class="btn-write">Написать статью</a>
+
+<!-- MAIN -->
+
+<main class="main">
+
+<header class="topbar">
+
+<div>
+<h1 id="pageTitle">Dashboard</h1>
+<p>Welcome back. Here is your portfolio overview.</p>
+</div>
+
+<div class="user">
+<div>
+<b style="font-size:13px;">Student</b>
+<div style="font-size:11px;color:#777;">Grade 9</div>
+</div>
+
+<div class="avatar">S</div>
+</div>
+
+</header>
+
+
+<!-- DASHBOARD -->
+
+<section id="dashboard" class="page active">
+
+<div class="hero">
+
+<div>
+
+<h2>Build your future with your achievements.</h2>
+
+<p>
+Smart Assistant organizes your certificates,
+analyzes your strengths and helps you discover
+possible career directions.
+</p>
+
+</div>
+
+<button class="btn white"
+onclick="openPage('portfolio')">
++ Add Achievement
+</button>
+
 </div>
 
 
+<div class="stats">
 
-<!-- ══ MAIN CONTENT ══ -->
+<div class="card">
+<div class="stat-title">Achievements</div>
+<div class="stat-value" id="achievementCount">24</div>
+<div class="stat-note">+4 this year</div>
+</div>
 
-<div class="page-layout">
+<div class="card">
+<div class="stat-title">Portfolio Score</div>
+<div class="stat-value">82<span style="font-size:14px;">/100</span></div>
+<div class="stat-note">Strong profile</div>
+</div>
 
-  <!-- Left: Hero + Feed -->
+<div class="card">
+<div class="stat-title">Top Strength</div>
+<div class="stat-value">STEM</div>
+<div class="stat-note">92% match</div>
+</div>
 
-  <main>
+<div class="card">
+<div class="stat-title">Career Matches</div>
+<div class="stat-value">6</div>
+<div class="stat-note">AI generated</div>
+</div>
 
-```
-<!-- Hero Article -->
-<section class="hero-article">
-  <span class="category-tag">Инвестиции</span>
-  <a href="article.html">
-    <img class="hero-img"
-      src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1200&q=80&fit=crop"
-      alt="Почему инвестиции в ИИ — это новая нефть Казахстана"
-      loading="lazy">
-    <h1>Почему инвестиции в ИИ — это новая нефть Казахстана к 2030 году</h1>
-  </a>
-  <p class="excerpt">Пока весь мир гонится за чипами и моделями, Казахстан стоит на пороге уникального окна возможностей. Разбираем, почему именно сейчас — лучшее время для входа, и какие секторы дадут максимальный рост.</p>
-  <div class="article-meta">
-    <span class="author">Арман Сейткали</span>
-    <span class="dot">·</span>
-    <span>Лицей «Bilim Innovation»</span>
-    <span class="dot">·</span>
-    <span>6 апреля 2026</span>
-    <span class="dot">·</span>
-    <span>🚀 2 418</span>
-  </div>
+</div>
+
+
+<div class="grid">
+
+<div class="card">
+
+<h3>Recent Achievements</h3>
+
+<div class="achievement">
+<div class="achievement-icon">🤖</div>
+<div>
+<b>Robotics Competition</b>
+<span>1st Place · STEM · 2026</span>
+</div>
+</div>
+
+<div class="achievement">
+<div class="achievement-icon">💻</div>
+<div>
+<b>Programming Certificate</b>
+<span>Competitive Programming · 2026</span>
+</div>
+</div>
+
+<div class="achievement">
+<div class="achievement-icon">🔬</div>
+<div>
+<b>Science Fair</b>
+<span>Participant · Science · 2025</span>
+</div>
+</div>
+
+<div class="achievement">
+<div class="achievement-icon">⚽</div>
+<div>
+<b>School Football Tournament</b>
+<span>Team Achievement · 2025</span>
+</div>
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h3>Strength Overview</h3>
+
+<div class="progress">
+<div class="progress-header">
+<span>STEM & Robotics</span>
+<b>92%</b>
+</div>
+
+<div class="progress-bar">
+<div class="progress-fill" style="width:92%"></div>
+</div>
+</div>
+
+
+<div class="progress">
+<div class="progress-header">
+<span>Programming</span>
+<b>85%</b>
+</div>
+
+<div class="progress-bar">
+<div class="progress-fill" style="width:85%"></div>
+</div>
+</div>
+
+
+<div class="progress">
+<div class="progress-header">
+<span>Science</span>
+<b>70%</b>
+</div>
+
+<div class="progress-bar">
+<div class="progress-fill" style="width:70%"></div>
+</div>
+</div>
+
+
+<div class="progress">
+<div class="progress-header">
+<span>Sports</span>
+<b>65%</b>
+</div>
+
+<div class="progress-bar">
+<div class="progress-fill" style="width:65%"></div>
+</div>
+</div>
+
+
+<div class="progress">
+<div class="progress-header">
+<span>Volunteering</span>
+<b>45%</b>
+</div>
+
+<div class="progress-bar">
+<div class="progress-fill" style="width:45%"></div>
+</div>
+</div>
+
+</div>
+
+</div>
+
 </section>
 
-<!-- Section Header -->
-<div class="section-header">
-  <h2>Последние статьи</h2>
-  <a href="#" class="see-all">Все материалы →</a>
-</div>
 
-<!-- Article Feed -->
-<div class="article-feed" id="article-feed">
+<!-- PORTFOLIO -->
 
-  <a href="article.html" class="feed-item">
-    <img class="thumb"
-      src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=300&q=80&fit=crop"
-      alt="Бизнес" loading="lazy">
-    <div class="feed-item-content">
-      <span class="cat-tag">Бизнес</span>
-      <h3>Как казахстанский стартап вышел на рынок ОАЭ без единого доллара венчурных денег</h3>
-      <p class="meta"><span class="author-name">Дана Нурланова</span> · НИШ Алматы · 5 апр 2026 · 🚀 1 205</p>
-    </div>
-  </a>
+<section id="portfolio" class="page">
 
-  <a href="article.html" class="feed-item">
-    <img class="thumb"
-      src="https://images.unsplash.com/photo-1642790551116-18e4a88a25a0?w=300&q=80&fit=crop"
-      alt="Биржа" loading="lazy">
-    <div class="feed-item-content">
-      <span class="cat-tag">Биржа</span>
-      <h3>Три ошибки начинающего инвестора, которые я совершил на KASE в 16 лет</h3>
-      <p class="meta"><span class="author-name">Тимур Ахметов</span> · Школа-лицей №1, Астана · 4 апр 2026 · 🚀 987</p>
-    </div>
-  </a>
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
 
-  <a href="article.html" class="feed-item">
-    <img class="thumb"
-      src="https://images.unsplash.com/photo-1560472355-536de3962603?w=300&q=80&fit=crop"
-      alt="Стартапы" loading="lazy">
-    <div class="feed-item-content">
-      <span class="cat-tag">Стартапы</span>
-      <h3>EdTech или HealthTech: куда казахстанские школьники несут свои бизнес-идеи в 2026-м</h3>
-      <p class="meta"><span class="author-name">Айгерим Касымова</span> · Haileybury Almaty · 3 апр 2026 · 🚀 843</p>
-    </div>
-  </a>
-
-  <a href="article.html" class="feed-item">
-    <img class="thumb"
-      src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=300&q=80&fit=crop"
-      alt="Энергетика" loading="lazy">
-    <div class="feed-item-content">
-      <span class="cat-tag">Энергетика</span>
-      <h3>Зелёная энергетика в Казахстане: реальность или красивые слайды для инвесторов</h3>
-      <p class="meta"><span class="author-name">Алишер Джаксыбеков</span> · БИЛ Шымкент · 2 апр 2026 · 🚀 761</p>
-    </div>
-  </a>
-
-  <a href="article.html" class="feed-item">
-    <img class="thumb"
-      src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=300&q=80&fit=crop"
-      alt="Маркетинг" loading="lazy">
-    <div class="feed-item-content">
-      <span class="cat-tag">Маркетинг</span>
-      <h3>Почему Gen Z не доверяет рекламе в Instagram и что с этим делают умные бренды</h3>
-      <p class="meta"><span class="author-name">Мадина Серикбаева</span> · Kolsai School · 1 апр 2026 · 🚀 634</p>
-    </div>
-  </a>
-
-  <a href="article.html" class="feed-item">
-    <img class="thumb"
-      src="https://images.unsplash.com/photo-1565372195458-9de0b320ef04?w=300&q=80&fit=crop"
-      alt="Недвижимость" loading="lazy">
-    <div class="feed-item-content">
-      <span class="cat-tag">Недвижимость</span>
-      <h3>Покупать квартиру в Алматы в 2026-м — мудрость или ловушка для молодых?</h3>
-      <p class="meta"><span class="author-name">Руслан Темиров</span> · NIS Павлодар · 31 мар 2026 · 🚀 590</p>
-    </div>
-  </a>
-
-</div>
-
-<!-- Load more -->
-<div style="text-align:center; margin-top:40px;">
-  <button onclick="loadMore(this)"
-    style="border:2px solid var(--black); padding:14px 40px; font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; transition:background 0.2s, color 0.2s; cursor:pointer;"
-    onmouseover="this.style.background='var(--black)'; this.style.color='#fff'"
-    onmouseout="this.style.background=''; this.style.color=''">
-    Загрузить ещё
-  </button>
-</div>
-```
-
-  </main>
-
-  <!-- Sidebar -->
-
-  <aside class="sidebar">
-
-```
-<!-- Currency -->
 <div>
-  <div class="section-header">
-    <h2>Курсы валют</h2>
-    <span style="font-size:10px; color:var(--gray3);">KZT</span>
-  </div>
-  <div class="currency-widget">
-    <table class="currency-table">
-      <tbody id="currency-table-body"></tbody>
-    </table>
-    <p class="update-time" id="update-time">Обновлено: —</p>
-  </div>
+<h2>My Portfolio</h2>
+<p style="color:#777;font-size:13px;margin-top:5px;">
+Manage your certificates and achievements.
+</p>
 </div>
 
-<!-- Popular -->
+<label class="btn primary">
+
++ Upload Certificate
+
+<input
+type="file"
+accept=".pdf,.png,.jpg,.jpeg"
+onchange="uploadCertificate(this)"
+>
+
+</label>
+
+</div>
+
+
+<div class="upload-box">
+
+<div class="upload-icon">☁️</div>
+
+<h3>Upload your achievements</h3>
+
+<p>
+PDF, PNG or JPG files are supported.
+</p>
+
+<label class="btn outline">
+
+Choose File
+
+<input
+type="file"
+accept=".pdf,.png,.jpg,.jpeg"
+onchange="uploadCertificate(this)"
+>
+
+</label>
+
+</div>
+
+
+<div class="certificates" id="certificates">
+
+<div class="certificate">
+<div class="certificate-icon">🤖</div>
+<h4>Robotics Competition</h4>
+<p>STEM · 2026 · 1st Place</p>
+</div>
+
+<div class="certificate">
+<div class="certificate-icon">💻</div>
+<h4>Programming Certificate</h4>
+<p>Programming · 2026</p>
+</div>
+
+<div class="certificate">
+<div class="certificate-icon">🔬</div>
+<h4>Science Fair</h4>
+<p>Science · 2025</p>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- AI ANALYSIS -->
+
+<section id="analysis" class="page">
+
+<div class="card">
+
+<div style="display:flex;justify-content:space-between;align-items:center;">
+
 <div>
-  <div class="section-header">
-    <h2>Популярное</h2>
-  </div>
-  <ul class="popular-list">
-    <li class="popular-item">
-      <span class="popular-num">01</span>
-      <div>
-        <a href="article.html">
-          <p class="popular-title">Почему инвестиции в ИИ — это новая нефть Казахстана</p>
-        </a>
-        <p class="popular-author">Арман Сейткали · 🚀 2 418</p>
-      </div>
-    </li>
-    <li class="popular-item">
-      <span class="popular-num">02</span>
-      <div>
-        <a href="article.html">
-          <p class="popular-title">Как казахстанский стартап вышел на рынок ОАЭ без венчура</p>
-        </a>
-        <p class="popular-author">Дана Нурланова · 🚀 1 205</p>
-      </div>
-    </li>
-    <li class="popular-item">
-      <span class="popular-num">03</span>
-      <div>
-        <a href="article.html">
-          <p class="popular-title">Три ошибки начинающего инвестора на KASE</p>
-        </a>
-        <p class="popular-author">Тимур Ахметов · 🚀 987</p>
-      </div>
-    </li>
-    <li class="popular-item">
-      <span class="popular-num">04</span>
-      <div>
-        <a href="article.html">
-          <p class="popular-title">EdTech или HealthTech: куда несут бизнес-идеи в 2026-м</p>
-        </a>
-        <p class="popular-author">Айгерим Касымова · 🚀 843</p>
-      </div>
-    </li>
-    <li class="popular-item">
-      <span class="popular-num">05</span>
-      <div>
-        <a href="article.html">
-          <p class="popular-title">Зелёная энергетика: реальность или красивые слайды</p>
-        </a>
-        <p class="popular-author">Алишер Джаксыбеков · 🚀 761</p>
-      </div>
-    </li>
-  </ul>
+
+<h2>AI Portfolio Analysis</h2>
+
+<p style="font-size:13px;color:#777;margin-top:6px;">
+Analyze your strengths and portfolio balance.
+</p>
+
 </div>
 
-<!-- CTA Banner -->
-<div style="background:var(--black); color:#fff; padding:32px 24px; text-align:center;">
-  <p style="font-family:var(--serif); font-size:22px; font-weight:700; margin-bottom:12px; line-height:1.3;">Твоя мысль достойна быть услышанной</p>
-  <p style="font-size:13px; color:rgba(255,255,255,0.6); line-height:1.6; margin-bottom:24px;">Напиши статью и стань автором FinMedia. Это бесплатно и займёт 5 минут.</p>
-  <a href="submit.html" class="btn-write" style="display:block; text-align:center;">Написать статью</a>
+<button class="btn primary" onclick="runAI()">
+Run AI Analysis
+</button>
+
 </div>
-```
 
-  </aside>
 
-</div><!-- /page-layout -->
+<div style="display:flex;justify-content:center;margin:30px 0;">
 
-<!-- ══ FOOTER ══ -->
+<canvas
+id="radar"
+width="600"
+height="400"
+style="max-width:100%;">
+</canvas>
 
-<footer>
-  <div class="footer-inner">
-    <div class="footer-logo">FinMedia</div>
-    <p class="footer-tagline">Первое профессиональное медиа, созданное молодёжью для молодёжи</p>
-    <div class="footer-grid">
-      <div class="footer-col">
-        <h4>Рубрики</h4>
-        <a href="#">Бизнес</a>
-        <a href="#">Финансы</a>
-        <a href="#">Инвестиции</a>
-        <a href="#">Биржа</a>
-        <a href="#">Стартапы</a>
-      </div>
-      <div class="footer-col">
-        <h4>Темы</h4>
-        <a href="#">Производство</a>
-        <a href="#">Энергетика</a>
-        <a href="#">Недвижимость</a>
-        <a href="#">Маркетинг</a>
-        <a href="#">Авто</a>
-      </div>
-      <div class="footer-col">
-        <h4>Платформа</h4>
-        <a href="submit.html">Написать статью</a>
-        <a href="#">Авторы</a>
-        <a href="#">Архив</a>
-        <a href="admin.html">Редакция</a>
-      </div>
-      <div class="footer-col">
-        <h4>О нас</h4>
-        <a href="#">О проекте</a>
-        <a href="#">Миссия</a>
-        <a href="#">Контакты</a>
-        <a href="#">editorial@finmedia.kz</a>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span>© 2026 FinMedia. Все права защищены.</span>
-      <span>Казахстан · finmedia.kz</span>
-    </div>
-  </div>
-</footer>
+</div>
 
-<script src="shared.js"></script>
+
+<div class="grid">
+
+<div class="ai-result">
+
+<b>🤖 AI Insight</b>
+
+<br><br>
+
+Your portfolio shows a strong technical profile.
+Your strongest areas are STEM, robotics and programming.
+
+<br><br>
+
+To create a more balanced profile, consider adding
+research projects, volunteering and leadership activities.
+
+</div>
+
+
+<div class="ai-result">
+
+<b>Detected Interests</b>
+
+<div class="tags">
+
+<span class="tag">Robotics</span>
+<span class="tag">Programming</span>
+<span class="tag">Engineering</span>
+<span class="tag">Mathematics</span>
+<span class="tag">Technology</span>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- CAREER -->
+
+<section id="career" class="page">
+
+<div class="card" style="margin-bottom:18px;">
+
+<h2>AI Career Guide</h2>
+
+<p style="font-size:13px;color:#777;margin-top:7px;">
+Possible directions based on your portfolio.
+These are suggestions, not final decisions.
+</p>
+
+</div>
+
+
+<div class="career-grid">
+
+
+<div class="career">
+
+<div class="career-icon">🤖</div>
+
+<h3>Robotics Engineering</h3>
+
+<p>
+Combines programming, electronics, mechanics
+and engineering problem solving.
+</p>
+
+<div class="match">
+92% portfolio match
+</div>
+
+</div>
+
+
+<div class="career">
+
+<div class="career-icon">💻</div>
+
+<h3>Software Engineering</h3>
+
+<p>
+Focuses on creating applications,
+systems and software solutions.
+</p>
+
+<div class="match">
+88% portfolio match
+</div>
+
+</div>
+
+
+<div class="career">
+
+<div class="career-icon">📊</div>
+
+<h3>Data Science</h3>
+
+<p>
+Uses mathematics, programming and data
+to solve complex problems.
+</p>
+
+<div class="match">
+81% portfolio match
+</div>
+
+</div>
+
+
+<div class="career">
+
+<div class="career-icon">🧠</div>
+
+<h3>Artificial Intelligence</h3>
+
+<p>
+Combines programming, mathematics and
+machine learning to create intelligent systems.
+</p>
+
+<div class="match">
+79% portfolio match
+</div>
+
+</div>
+
+
+<div class="career">
+
+<div class="career-icon">⚙️</div>
+
+<h3>Mechanical Engineering</h3>
+
+<p>
+Designs machines, mechanisms and
+technical systems.
+</p>
+
+<div class="match">
+76% portfolio match
+</div>
+
+</div>
+
+
+<div class="career">
+
+<div class="career-icon">🔬</div>
+
+<h3>Research & Science</h3>
+
+<p>
+Explores scientific questions through
+experiments, analysis and innovation.
+</p>
+
+<div class="match">
+71% portfolio match
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card" style="margin-top:20px;">
+
+<h3>🚀 How to strengthen your portfolio</h3>
+
+<div class="achievement">
+
+<div class="achievement-icon">🔬</div>
+
+<div>
+<b>Research Project</b>
+<span>
+Complete a small independent science or technology project.
+</span>
+</div>
+
+</div>
+
+
+<div class="achievement">
+
+<div class="achievement-icon">🌍</div>
+
+<div>
+<b>Community Activity</b>
+<span>
+Add a volunteering or social-impact project.
+</span>
+</div>
+
+</div>
+
+
+<div class="achievement">
+
+<div class="achievement-icon">💻</div>
+
+<div>
+<b>Personal Project</b>
+<span>
+Build and document a programming or robotics project.
+</span>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- QR PROFILE -->
+
+<section id="profile" class="page">
+
+<div class="card">
+
+<h2>Public QR Profile</h2>
+
+<p style="font-size:13px;color:#777;margin:7px 0 25px;">
+
+A compact digital profile that can be shared
+with universities, mentors and competition organizers.
+
+</p>
+
+
+<div class="profile-card">
+
+<div class="qr"></div>
+
+<div>
+
+<h2 style="margin-bottom:10px;">
+Student Portfolio
+</h2>
+
+<p style="font-size:13px;color:#777;line-height:1.8;">
+
+24 Achievements<br>
+STEM · Programming · Robotics<br>
+Portfolio Score: 82/100
+
+</p>
+
+<button
+class="btn primary"
+style="margin-top:15px;"
+onclick="copyProfile()">
+
+Copy Profile Link
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+</div>
+
+
+<!-- MODAL -->
+
+<div class="modal" id="modal">
+
+<div class="modal-box">
+
+<button class="close" onclick="closeModal()">
+×
+</button>
+
+<h2>AI Analysis Complete</h2>
+
+<p style="margin-top:10px;">
+
+Your portfolio has been analyzed successfully.
+
+<br><br>
+
+<strong>Strong areas:</strong><br>
+STEM, Robotics and Programming.
+
+<br><br>
+
+<strong>Suggested next step:</strong><br>
+Add a research project or community activity
+to make your portfolio more diverse.
+
+</p>
+
+<button
+class="btn primary"
+style="margin-top:18px;"
+onclick="closeModal()">
+
+Continue
+
+</button>
+
+</div>
+
+</div>
+
 
 <script>
-// ── Burger / Drawer ──────────────────────────────
-document.getElementById('burger-btn').addEventListener('click', function() {
-  document.getElementById('drawer-overlay').classList.add('open');
-  document.getElementById('drawer').classList.add('open');
-});
-document.getElementById('drawer-overlay').addEventListener('click', function() {
-  this.classList.remove('open');
-  document.getElementById('drawer').classList.remove('open');
-});
-document.getElementById('drawer-close').addEventListener('click', function() {
-  document.getElementById('drawer-overlay').classList.remove('open');
-  document.getElementById('drawer').classList.remove('open');
+
+/* PAGE NAVIGATION */
+
+const pageTitles = {
+
+dashboard: "Dashboard",
+portfolio: "My Portfolio",
+analysis: "AI Analysis",
+career: "Career Guide",
+profile: "QR Profile"
+
+};
+
+
+function openPage(page, button) {
+
+document.querySelectorAll(".page")
+.forEach(function(section) {
+
+section.classList.remove("active");
+
 });
 
-// Drawer category switching
-document.querySelectorAll('.cat-link').forEach(link => {
-  link.addEventListener('click', function(e) {
-    e.preventDefault();
-    document.querySelectorAll('.cat-link').forEach(l => {
-      l.classList.remove('active');
-      l.style.color = '';
-      l.style.fontWeight = '';
-    });
-    this.classList.add('active');
-    this.style.color = 'var(--red)';
-    this.style.fontWeight = '700';
-  });
+document.getElementById(page)
+.classList.add("active");
+
+
+document.querySelectorAll(".nav button")
+.forEach(function(btn) {
+
+btn.classList.remove("active");
+
 });
 
-// Update time
-document.getElementById('update-time').textContent =
-  'Обновлено: ' + new Date().toLocaleTimeString('ru-RU', {hour:'2-digit', minute:'2-digit'});
 
-// Load more (demo)
-function loadMore(btn) {
-  btn.textContent = 'Загрузка...';
-  btn.disabled = true;
-  setTimeout(() => {
-    btn.textContent = 'Всё загружено';
-    btn.style.color = 'var(--gray3)';
-    btn.style.borderColor = 'var(--gray2)';
-    showToast('Все статьи загружены');
-  }, 1200);
+if(button) {
+
+button.classList.add("active");
+
 }
+
+
+document.getElementById("pageTitle")
+.textContent = pageTitles[page];
+
+
+window.scrollTo(0,0);
+
+
+if(page === "analysis") {
+
+drawRadar();
+
+}
+
+}
+
+
+/* FILE UPLOAD */
+
+function uploadCertificate(input) {
+
+if(!input.files.length) return;
+
+const file = input.files[0];
+
+const container =
+document.getElementById("certificates");
+
+
+const card =
+document.createElement("div");
+
+card.className = "certificate";
+
+
+card.innerHTML = `
+
+<div class="certificate-icon">
+📄
+</div>
+
+<h4>${file.name}</h4>
+
+<p>
+New achievement · Added now
+</p>
+
+`;
+
+
+container.prepend(card);
+
+
+/* Update achievement number */
+
+const count =
+document.getElementById("achievementCount");
+
+count.textContent =
+parseInt(count.textContent) + 1;
+
+
+input.value = "";
+
+}
+
+
+/* AI MODAL */
+
+function runAI() {
+
+document.getElementById("modal")
+.classList.add("show");
+
+}
+
+
+function closeModal() {
+
+document.getElementById("modal")
+.classList.remove("show");
+
+}
+
+
+/* COPY PROFILE */
+
+function copyProfile() {
+
+navigator.clipboard.writeText(
+window.location.href
+);
+
+alert("Profile link copied!");
+
+}
+
+
+/* RADAR CHART */
+
+function drawRadar() {
+
+const canvas =
+document.getElementById("radar");
+
+const ctx =
+canvas.getContext("2d");
+
+
+const width = canvas.width;
+const height = canvas.height;
+
+ctx.clearRect(0,0,width,height);
+
+
+const centerX = width / 2;
+const centerY = height / 2 + 10;
+
+const radius = 130;
+
+
+const labels = [
+
+"STEM",
+"Programming",
+"Science",
+"Sports",
+"Volunteering",
+"Creativity"
+
+];
+
+
+const values = [
+
+0.92,
+0.85,
+0.70,
+0.65,
+0.45,
+0.50
+
+];
+
+
+function point(index, r) {
+
+const angle =
+- Math.PI / 2 +
+index * 2 * Math.PI / 6;
+
+return [
+
+centerX +
+Math.cos(angle) * r,
+
+centerY +
+Math.sin(angle) * r
+
+];
+
+}
+
+
+/* GRID */
+
+ctx.strokeStyle = "#dfe2ea";
+ctx.lineWidth = 1;
+
+
+for(let level = 1; level <= 4; level++) {
+
+ctx.beginPath();
+
+for(let i = 0; i < 6; i++) {
+
+const p =
+point(i, radius * level / 4);
+
+if(i === 0) {
+
+ctx.moveTo(p[0],p[1]);
+
+} else {
+
+ctx.lineTo(p[0],p[1]);
+
+}
+
+}
+
+ctx.closePath();
+
+ctx.stroke();
+
+}
+
+
+/* AXIS */
+
+for(let i = 0; i < 6; i++) {
+
+const p =
+point(i,radius);
+
+ctx.beginPath();
+
+ctx.moveTo(centerX,centerY);
+
+ctx.lineTo(p[0],p[1]);
+
+ctx.stroke();
+
+
+ctx.fillStyle = "#697386";
+
+ctx.font = "12px Arial";
+
+ctx.fillText(
+labels[i],
+p[0] - 25,
+p[1] + (p[1] < centerY ? -8 : 18)
+);
+
+}
+
+
+/* DATA */
+
+ctx.beginPath();
+
+
+for(let i = 0; i < 6; i++) {
+
+const p =
+point(i,radius * values[i]);
+
+if(i === 0) {
+
+ctx.moveTo(p[0],p[1]);
+
+} else {
+
+ctx.lineTo(p[0],p[1]);
+
+}
+
+}
+
+
+ctx.closePath();
+
+ctx.fillStyle =
+"rgba(99,91,255,0.20)";
+
+ctx.fill();
+
+
+ctx.strokeStyle =
+"#635bff";
+
+ctx.lineWidth = 3;
+
+ctx.stroke();
+
+}
+
+
+/* INITIAL CHART */
+
+drawRadar();
+
 </script>
 
 </body>
